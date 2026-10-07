@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Pixel Forge – Galerie</title>
+<style>
+  body { margin: 0; padding: 16px; background: #5b6b55; color: #eee; font: 14px system-ui, sans-serif; }
+  .row { display: flex; align-items: center; gap: 16px; margin-bottom: 12px; }
+  .row b { width: 110px; }
+  canvas { image-rendering: pixelated; }
+</style>
+</head>
+<body>
+<div id="out"></div>
+<script type="module">
+  import { PRESETS } from './src/character.js';
+  import { renderSheet, scaledCanvas } from './src/export.js';
+  const scale = +(new URLSearchParams(location.search).get('z') || 3);
+  const only = new URLSearchParams(location.search).get('only');
+  const out = document.getElementById('out');
+  for (const [name, spec] of Object.entries(PRESETS)) {
+    if (only && only !== name) continue;
+    const row = document.createElement('div');
+    row.className = 'row';
+    row.innerHTML = `<b>${name}</b>`;
+    row.appendChild(scaledCanvas(renderSheet(spec).canvas, scale));
+    out.appendChild(row);
+  }
+  window.__ready = true;
+</script>
+</body>
+</html>

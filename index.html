@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pixel Forge</title>
+  <meta name="description" content="Pixelart-Figuren fuer Godot im Browser bauen: vier Richtungen, Laufanimation, Export als Spritesheet und SpriteFrames." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="top">
+    <h1>Pixel Forge</h1>
+    <p class="sub">Figuren fuer Godot &middot; 32&times;32 &middot; vier Richtungen &middot; Laufen und Stehen</p>
+  </header>
+
+  <section class="presets" aria-label="Vorlagen">
+    <div id="presets" class="preset-row"></div>
+    <button id="random" class="btn">Zufall</button>
+  </section>
+
+  <main class="layout">
+    <section class="stage">
+      <div class="preview-wrap">
+        <canvas id="big" width="32" height="32" class="pixel big"></canvas>
+      </div>
+      <div class="toolbar">
+        <div class="seg" id="dirs">
+          <button data-dir="down" class="on">Vorne</button>
+          <button data-dir="left">Links</button>
+          <button data-dir="right">Rechts</button>
+          <button data-dir="up">Hinten</button>
+        </div>
+        <div class="seg" id="anims">
+          <button data-anim="walk" class="on">Laufen</button>
+          <button data-anim="idle">Stehen</button>
+        </div>
+        <div class="seg" id="bgs">
+          <button data-bg="grass" class="on">Gras</button>
+          <button data-bg="stone">Stein</button>
+          <button data-bg="dark">Dunkel</button>
+          <button data-bg="check">Raster</button>
+        </div>
+      </div>
+      <div class="quad" id="quad"></div>
+
+      <h2>Spritesheet</h2>
+      <div class="sheet-wrap"><canvas id="sheet" class="pixel"></canvas></div>
+      <p class="hint" id="sheetInfo"></p>
+    </section>
+
+    <section class="controls" id="controls">
+      <div class="group">
+        <label class="field">Name <input id="name" type="text" maxlength="40" /></label>
+      </div>
+      <div class="group" id="selects"></div>
+      <div class="group" id="toggles"></div>
+      <div class="group" id="colors"></div>
+
+      <div class="group export">
+        <h2>Export fuer Godot</h2>
+        <label class="field">Ordner im Godot-Projekt
+          <input id="folder" type="text" value="res://sprites/characters" />
+        </label>
+        <div class="btns">
+          <button id="dlPng" class="btn primary">Spritesheet (.png)</button>
+          <button id="dlTres" class="btn primary">SpriteFrames (.tres)</button>
+        </div>
+        <p class="hint">
+          Beide Dateien in den Ordner oben legen. In Godot: <b>AnimatedSprite2D</b> &rarr; Sprite Frames &rarr;
+          Laden &rarr; die .tres-Datei. Animationen heissen <code>walk_down</code>, <code>idle_left</code> usw.
+          Fuer scharfe Pixel: Projekteinstellungen &rarr; Rendering &rarr; Textures &rarr; Default Texture Filter = <b>Nearest</b>.
+        </p>
+        <div class="btns">
+          <button id="dlBig" class="btn">Grosses Bild zum Teilen</button>
+          <button id="dlJson" class="btn">Figur speichern (.json)</button>
+          <label class="btn file">Figur laden<input id="loadJson" type="file" accept=".json,application/json" hidden /></label>
+        </div>
+      </div>
+
+      <div class="group">
+        <h2>Meine Figuren</h2>
+        <div class="btns"><button id="keep" class="btn">Im Browser merken</button></div>
+        <div id="saved" class="saved"></div>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="src/app.js"></script>
+</body>
+</html>
